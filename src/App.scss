@@ -1,0 +1,58 @@
+* {
+  font-family: "Arial";
+}
+.app {
+  h1 {
+    text-align: center;
+  }
+  .main {
+    display: flex;
+    flex-direction: row;
+    .map {
+      flex: 2;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      .map-bg {
+        width: 100%;
+      }
+      .map-board {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        .place-node {
+          opacity: 0.8;
+          cursor: pointer;
+          border: 1px solid black;
+          &.Hotel {
+            fill: #9ee79e;
+          }
+          &.Hospital {
+            fill: #ff50d9;
+          }
+          &.Supermarket {
+            fill: #fd777d;
+          }
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .paths {
+      flex: 1;
+      & .path-content {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #cbcbcb;
+        border-radius: 5px;
+      }
+      & .loading-box {
+        justify-content: center;
+        display: flex;
+        margin-top: 20px;
+      }
+    }
+  }
+}
