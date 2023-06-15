@@ -80,11 +80,24 @@ function App() {
         AND x.id = '${fromPlace.id}' and y.id = '${toPlace.id}'
       RETURN r
     `);
-    result.records.map((r) => {
+    const allPossible = result.records.map((r) => {
       const match = r.get("r");
-      console.log(match);
+      const paths = match.map((r) => ({
+        ...r.properties,
+        km: parseFloat(r.properties.km),
+        minute: parseFloat(r.properties.minute),
+      }));
+      const totalKm = paths.map((r) => r.km).reduce((a, b) => a + b, 0);
+      const totalMinute = paths.map((r) => r.minute).reduce((a, b) => a + b, 0);
+      return {
+        totalKm,
+        totalMinute,
+        paths: match.map((r) => r.properties),
+      };
     });
     session.close();
+    const topBest = allPossible.sort((a, b) => a.totalKm - b.totalKm).slice(0, 3);
+    setAvailableRoutes(topBest);
     setIsLoading(false);
   }, [fromPlace, toPlace]);
 
@@ -105,7 +118,7 @@ function App() {
       <div className="main">
         <div className="map">
           <svg className="map-board" viewBox={`0 0 ${mapSize[0]} ${mapSize[1]}`}>
-            {allRoutes.map((r) => {
+            {availableRoutes.length === 0 && allRoutes.map((r) => {
               const startNode = places.filter((p) => p.id === r.from)[0];
               const endNode = places.filter((p) => p.id === r.to)[0];
               const startPosition = getMapPosition(startNode.lat, startNode.lng);
@@ -122,6 +135,28 @@ function App() {
                 />
               );
             })}
+            {availableRoutes
+              .sort((a, b) => b.totalKm - a.totalKm)
+              .map((fullPath, idx) => {
+                const color = idx === 0 ? "pink" : idx === 1 ? "green" : "blue";
+                return fullPath.paths.map((r) => {
+                  const startNode = places.filter((p) => p.id === r.from)[0];
+                  const endNode = places.filter((p) => p.id === r.to)[0];
+                  const startPosition = getMapPosition(startNode.lat, startNode.lng);
+                  const endPosition = getMapPosition(endNode.lat, endNode.lng);
+                  return (
+                    <line
+                      key={`path${idx}-${r.id}`}
+                      x1={startPosition.cx}
+                      y1={startPosition.cy}
+                      x2={endPosition.cx}
+                      y2={endPosition.cy}
+                      stroke={color}
+                      strokeWidth={10 - idx * 2}
+                    />
+                  );
+                });
+              })}
             {places.map((p) => (
               <circle
                 key={p.id}
@@ -172,4 +207,3 @@ function App() {
 }
 
 export default App;
-
