@@ -5,6 +5,7 @@ const neo4j = require("neo4j-driver");
 const driver = neo4j.driver("bolt://34.201.5.14:7687", neo4j.auth.basic("neo4j", "formats-hunts-interference"));
 
 const mapArea = [49.43394050775212, 8.621141066717644, 49.395801809827034, 8.72828845937252];
+const mapSize = [1270, 709];
 
 function App() {
   const [places, setPlaces] = useState([]);
@@ -12,7 +13,6 @@ function App() {
   const [fromPlace, setFromPlace] = useState(null);
   const [toPlace, setToPlace] = useState(null);
   const [availableRoutes, setAvailableRoutes] = useState([]);
-  const mapSize = [1270, 709];
   const [isLoading, setIsLoading] = useState(false);
 
   const updatePlaces = useCallback(async () => {
