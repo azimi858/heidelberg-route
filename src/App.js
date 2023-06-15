@@ -92,7 +92,7 @@ function App() {
       return {
         totalKm,
         totalMinute,
-        paths: match.map((r) => r.properties),
+        paths,
       };
     });
     session.close();
@@ -117,57 +117,60 @@ function App() {
       <h1>Heidelberg Route finder</h1>
       <div className="main">
         <div className="map">
-          <svg className="map-board" viewBox={`0 0 ${mapSize[0]} ${mapSize[1]}`}>
-            {availableRoutes.length === 0 && allRoutes.map((r) => {
-              const startNode = places.filter((p) => p.id === r.from)[0];
-              const endNode = places.filter((p) => p.id === r.to)[0];
-              const startPosition = getMapPosition(startNode.lat, startNode.lng);
-              const endPosition = getMapPosition(endNode.lat, endNode.lng);
-              return (
-                <line
-                  key={r.id}
-                  x1={startPosition.cx}
-                  y1={startPosition.cy}
-                  x2={endPosition.cx}
-                  y2={endPosition.cy}
-                  stroke="#dddddd55"
-                  strokeWidth="4"
-                />
-              );
-            })}
-            {availableRoutes
-              .sort((a, b) => b.totalKm - a.totalKm)
-              .map((fullPath, idx) => {
-                const color = idx === 0 ? "pink" : idx === 1 ? "green" : "blue";
-                return fullPath.paths.map((r) => {
+          <div className="map-content">
+            <svg className="map-board" viewBox={`0 0 ${mapSize[0]} ${mapSize[1]}`}>
+              {availableRoutes.length === 0 &&
+                allRoutes.map((r) => {
                   const startNode = places.filter((p) => p.id === r.from)[0];
                   const endNode = places.filter((p) => p.id === r.to)[0];
                   const startPosition = getMapPosition(startNode.lat, startNode.lng);
                   const endPosition = getMapPosition(endNode.lat, endNode.lng);
                   return (
                     <line
-                      key={`path${idx}-${r.id}`}
+                      key={r.id}
                       x1={startPosition.cx}
                       y1={startPosition.cy}
                       x2={endPosition.cx}
                       y2={endPosition.cy}
-                      stroke={color}
-                      strokeWidth={10 - idx * 2}
+                      stroke="#dddddd55"
+                      strokeWidth="4"
                     />
                   );
-                });
-              })}
-            {places.map((p) => (
-              <circle
-                key={p.id}
-                {...getMapPosition(p.lat, p.lng)}
-                r="10"
-                onClick={() => circleClicked(p.id)}
-                className={`place-node ${p.labels.join(" ")}`}
-              />
-            ))}
-          </svg>
-          <img className="map-bg" src="/heidelberg.png" alt="Heidelberg Satellite" />
+                })}
+              {availableRoutes
+                // .sort((a, b) => b.totalKm - a.totalKm)
+                .map((fullPath, idx) => {
+                  const color = idx === 0 ? "blue" : idx === 1 ? "green" : "pink";
+                  return fullPath.paths.map((r) => {
+                    const startNode = places.filter((p) => p.id === r.from)[0];
+                    const endNode = places.filter((p) => p.id === r.to)[0];
+                    const startPosition = getMapPosition(startNode.lat, startNode.lng);
+                    const endPosition = getMapPosition(endNode.lat, endNode.lng);
+                    return (
+                      <line
+                        key={`path${idx}-${r.id}`}
+                        x1={startPosition.cx}
+                        y1={startPosition.cy}
+                        x2={endPosition.cx}
+                        y2={endPosition.cy}
+                        stroke={color}
+                        strokeWidth={10 - idx * 2}
+                      />
+                    );
+                  });
+                })}
+              {places.map((p) => (
+                <circle
+                  key={p.id}
+                  {...getMapPosition(p.lat, p.lng)}
+                  r="10"
+                  onClick={() => circleClicked(p.id)}
+                  className={`place-node ${p.labels.join(" ")}`}
+                />
+              ))}
+            </svg>
+            <img className="map-bg" src="/heidelberg.png" alt="Heidelberg Satellite" />
+          </div>
         </div>
         <div className="paths">
           <div className="path-content">
@@ -194,7 +197,37 @@ function App() {
               )}
             </div>
           )}
-          {availableRoutes?.length > 0 && <div>Available routes:</div>}
+          {availableRoutes?.length > 0 && (
+            <div className="available-routes">
+              Available routes:
+              {availableRoutes
+                // .sort((a, b) => a.totalKm - b.totalKm)
+                .map((fullPath, idx) => {
+                  const color = idx === 0 ? "blue" : idx === 1 ? "green" : "pink";
+                  return (
+                    <div className="route">
+                      <div className="header">
+                        <strong>Route {idx + 1} </strong>{" "}
+                        <div className="color-box" style={{ backgroundColor: color }}></div>
+                      </div>
+                      <div className="header">Distance: {fullPath.totalKm.toLocaleString()} Km</div>
+                      <div className="header">Minutes: {fullPath.totalMinute.toLocaleString()} min</div>
+                      <div className="header">Steps:</div>
+                      {fullPath.paths.map((r, idx2) => {
+                        const startNode = places.filter((p) => p.id === r.from)[0];
+                        const endNode = places.filter((p) => p.id === r.to)[0];
+                        return (
+                          <div className="step">
+                            {idx2 + 1}. Take the path between "<strong>{startNode.name}</strong>" and "
+                            <strong>{endNode.name}</strong>" ({r.km}km, {r.minute}mins)
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+            </div>
+          )}
           {isLoading && (
             <div className="loading-box">
               <BarLoader color="#36d7b7" height={7} width={200} />

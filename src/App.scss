@@ -10,9 +10,11 @@
     flex-direction: row;
     .map {
       flex: 2;
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
+      .map-content {
+        overflow: hidden;
+        border-radius: 10px;
+        position: relative;
+      }
       .map-bg {
         width: 100%;
       }
@@ -42,16 +44,39 @@
     }
     .paths {
       flex: 1;
-      & .path-content {
+      .path-content {
         padding: 10px;
         margin: 5px;
         border: 1px solid #cbcbcb;
         border-radius: 5px;
       }
-      & .loading-box {
+      .loading-box {
         justify-content: center;
         display: flex;
         margin-top: 20px;
+      }
+      .available-routes {
+        text-align: center;
+        .route {
+          text-align: left;
+          padding: 10px;
+          margin: 5px;
+          border: 1px solid #cbcbcb;
+          border-radius: 5px;
+          .header {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+            .color-box {
+              width: 20px;
+              height: 15px;
+              margin: 1px 8px;
+            }
+          }
+          .step {
+            margin-bottom: 20px;
+          }
+        }
       }
     }
   }
