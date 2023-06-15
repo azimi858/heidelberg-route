@@ -18,6 +18,42 @@ CREATE (s3:Place:Supermarket {lat:49.41128768790451,lng:8.703999515592239,name:'
 CREATE (s4:Place:Supermarket {lat:49.40747317858243,lng:8.689081721461632,name:'Aldi Süd',id:'s4'})
 CREATE (s5:Place:Supermarket {lat:49.40898245571329,lng:8.695381645236235,name:'PENNY',id:'s5'})
 CREATE (s6:Place:Supermarket {lat:49.40462363990794,lng:8.681283904405857,name:'Kaufland Heidelberg-Weststadt',id:'s6'})
+
+
+
+
+
+h11 (Hotel & Boardinghouse Deutscher Kaiser) - h1 (Hotel Das Lamm)
+h1 (Hotel Das Lamm) - hos1(University Hospital Heidelberg)
+hos1 (University Hospital Heidelberg) - hos2(Medical University Hospital)
+h2-hos2
+h1-h2
+h6-h2
+h3-h2
+h10-s3
+h5-s3
+h12-h5
+h5-s5
+s3-s5
+h3-s5
+h3-s2
+s2-s4
+s4-h4
+h4-h3
+h4-h9
+s4-s6
+h9-s6
+s6-s1
+s1-h9
+s1-h7
+h7-h8
+s6-h7
+s6-h8
+h12-h10
+
+
+
+
 CREATE (hos1)-[r1:DRIVE {km:2.4,minute:8,from:'hos1',to:'h1',id:'r1'}]->(h1)
 CREATE (h1)-[r2:DRIVE {km:1.7,minute:7,from:'h1',to:'h2',id:'r2'}]->(h2)
 CREATE (h2)-[r3:DRIVE {km:2.8,minute:9,from:'h2',to:'hos2',id:'r3'}]->(hos2)
