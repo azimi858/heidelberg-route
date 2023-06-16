@@ -1,3 +1,4 @@
+# Create Places
 CREATE (hos1:Place:Hospital {lat:49.419947120898684,lng:8.667537753084343,name:'University Hospital Heidelberg',id:'hos1'})
 CREATE (h1:Place:Hotel {lat:49.42626160980799,lng:8.688307017922853,name:'Hotel Das Lamm',id:'h1'})
 CREATE (h2:Place:Hotel {lat:49.41548312938373,lng:8.69045411376881,name:'Hotel Heidelberg Astoria',id:'h2'})
@@ -20,67 +21,31 @@ CREATE (s5:Place:Supermarket {lat:49.40898245571329,lng:8.695381645236235,name:'
 CREATE (s6:Place:Supermarket {lat:49.40462363990794,lng:8.681283904405857,name:'Kaufland Heidelberg-Weststadt',id:'s6'})
 
 
-
-
-
-h11 (Hotel & Boardinghouse Deutscher Kaiser) - h1 (Hotel Das Lamm)
-h1 (Hotel Das Lamm) - hos1(University Hospital Heidelberg)
-hos1 (University Hospital Heidelberg) - hos2(Medical University Hospital)
-h2-hos2
-h1-h2
-h6-h2
-h3-h2
-h10-s3
-h5-s3
-h12-h5
-h5-s5
-s3-s5
-h3-s5
-h3-s2
-s2-s4
-s4-h4
-h4-h3
-h4-h9
-s4-s6
-h9-s6
-s6-s1
-s1-h9
-s1-h7
-h7-h8
-s6-h7
-s6-h8
-h12-h10
-
-
-
-
-CREATE (hos1)-[r1:DRIVE {km:2.4,minute:8,from:'hos1',to:'h1',id:'r1'}]->(h1)
-CREATE (h1)-[r2:DRIVE {km:1.7,minute:7,from:'h1',to:'h2',id:'r2'}]->(h2)
-CREATE (h2)-[r3:DRIVE {km:2.8,minute:9,from:'h2',to:'hos2',id:'r3'}]->(hos2)
-CREATE (hos1)-[r4:DRIVE {km:1.3,minute:4,from:'hos1',to:'hos2',id:'r4'}]->(hos2)
-CREATE (h7)-[r5:DRIVE {km:4.8,minute:12,from:'h7',to:'h12',id:'r5'}]->(h12)
-CREATE (h12)-[r6:DRIVE {km:4.4,minute:11,from:'h12',to:'h10',id:'r6'}]->(h10)
-CREATE (h10)-[r7:DRIVE {km:4.1,minute:9,from:'h10',to:'h8',id:'r7'}]->(h8)
-CREATE (h8)-[r8:DRIVE {km:1.8,minute:4,from:'h8',to:'h9',id:'r8'}]->(h9)
-CREATE (h9)-[r9:DRIVE {km:1.7,minute:4,from:'h9',to:'h7',id:'r9'}]->(h7)
-CREATE (s5)-[r10:DRIVE {km:0.8,minute:3,from:'s5',to:'s2',id:'r10'}]->(s2)
-CREATE (s2)-[r11:DRIVE {km:3.5,minute:9,from:'s2',to:'h11',id:'r11'}]->(h11)
-CREATE (h11)-[r12:DRIVE {km:6,minute:12,from:'h11',to:'h12',id:'r12'}]->(h12)
-CREATE (s1)-[r14:DRIVE {km:2.8,minute:6,from:'s1',to:'s2',id:'r14'}]->(s2)
-CREATE (s2)-[r15:DRIVE {km:3.1,minute:6,from:'s2',to:'s3',id:'r15'}]->(s3)
-CREATE (s3)-[r16:DRIVE {km:17.4,minute:17,from:'s3',to:'s4',id:'r16'}]->(s4)
-CREATE (s4)-[r17:DRIVE {km:2,minute:5,from:'s4',to:'s6',id:'r17'}]->(s6)
-CREATE (s6)-[r18:DRIVE {km:0.7,minute:2,from:'s6',to:'s1',id:'r18'}]->(s1)
-CREATE (s6)-[r19:DRIVE {km:1.3,minute:5,from:'s6',to:'s5',id:'r19'}]->(s5)
-CREATE (s5)-[r20:DRIVE {km:2.8,minute:7,from:'s5',to:'h12',id:'r20'}]->(h12)
-CREATE (h12)-[r21:DRIVE {km:3.7,minute:9,from:'h12',to:'s6',id:'r21'}]->(s6)
-CREATE (s5)-[r23:DRIVE {km:2.9,minute:8,from:'s5',to:'h1',id:'r23'}]->(h1)
-CREATE (h1)-[r24:DRIVE {km:2.3,minute:7,from:'h1',to:'s2',id:'r24'}]->(s2)
-CREATE (h1)-[r25:DRIVE {km:5.1,minute:12,from:'h1',to:'h12',id:'r25'}]->(h12)
-CREATE (h12)-[r26:DRIVE {km:2.7,minute:6,from:'h12',to:'h3',id:'r26'}]->(h3)
-CREATE (h3)-[r27:DRIVE {km:2.1,minute:6,from:'h3',to:'h1',id:'r27'}]->(h1)
-CREATE (h4)-[r28:DRIVE {km:0.7,minute:2,from:'h4',to:'h3',id:'r28'}]->(h3)
-CREATE (h3)-[r29:DRIVE {km:0.8,minute:3,from:'h3',to:'h6',id:'r29'}]->(h6)
-CREATE (h6)-[r30:DRIVE {km:1.6,minute:4,from:'h6',to:'h5',id:'r30'}]->(h5)
-CREATE (h5)-[r31:DRIVE {km:2,minute:5,from:'h5',to:'h4',id:'r31'}]->(h4)
-CREATE (h5)-[r32:DRIVE {km:0.8,minute:2,from:'h5',to:'h3',id:'r32'}]->(h3)
+# Create Routes
+CREATE (h11)-[r1:DRIVE {km:1.2,minute:2,from:'h11',to:'h1',id:'r1'}]->(h1)
+CREATE (h1)-[r2:DRIVE {km:1.6,minute:3,from:'h1',to:'hos1',id:'r2'}]->(hos1)
+CREATE (hos1)-[r3:DRIVE {km:2.6,minute:3,from:'hos1',to:'hos2',id:'r3'}]->(hos2)
+CREATE (h2)-[r4:DRIVE {km:2.5,minute:4,from:'h2',to:'hos2',id:'r4'}]->(hos2)
+CREATE (h1)-[r5:DRIVE {km:1.1,minute:2,from:'h1',to:'h2',id:'r5'}]->(h2)
+CREATE (h6)-[r6:DRIVE {km:1.4,minute:3,from:'h6',to:'h2',id:'r6'}]->(h2)
+CREATE (h3)-[r7:DRIVE {km:2.4,minute:2,from:'h3',to:'h2',id:'r7'}]->(h2)
+CREATE (h10)-[r8:DRIVE {km:3.5,minute:5,from:'h10',to:'s3',id:'r8'}]->(s3)
+CREATE (h5)-[r9:DRIVE {km:1.8,minute:6,from:'h5',to:'s3',id:'r9'}]->(s3)
+CREATE (h12)-[r10:DRIVE {km:1.6,minute:3,from:'h12',to:'h5',id:'r10'}]->(h5)
+CREATE (h5)-[r11:DRIVE {km:2.3,minute:7,from:'h5',to:'s5',id:'r11'}]->(s5)
+CREATE (s3)-[r12:DRIVE {km:1.4,minute:3,from:'s3',to:'s5',id:'r12'}]->(s5)
+CREATE (h3)-[r13:DRIVE {km:2.4,minute:5,from:'h3',to:'s5',id:'r13'}]->(s5)
+CREATE (h3)-[r14:DRIVE {km:2.1,minute:8,from:'h3',to:'s2',id:'r14'}]->(s2)
+CREATE (s2)-[r15:DRIVE {km:2.5,minute:6,from:'s2',to:'s4',id:'r15'}]->(s4)
+CREATE (s4)-[r16:DRIVE {km:0.5,minute:3,from:'s4',to:'h4',id:'r16'}]->(h4)
+CREATE (h4)-[r17:DRIVE {km:0.75,minute:2,from:'h4',to:'h3',id:'r17'}]->(h3)
+CREATE (h4)-[r18:DRIVE {km:0.94,minute:1,from:'h4',to:'h9',id:'r18'}]->(h9)
+CREATE (s4)-[r19:DRIVE {km:1.4,minute:3,from:'s4',to:'s6',id:'r19'}]->(s6)
+CREATE (h9)-[r20:DRIVE {km:1.4,minute:6,from:'h9',to:'s6',id:'r20'}]->(s6)
+CREATE (s6)-[r21:DRIVE {km:2.2,minute:7,from:'s6',to:'s1',id:'r21'}]->(s1)
+CREATE (s1)-[r22:DRIVE {km:1.7,minute:8,from:'s1',to:'h9',id:'r22'}]->(h9)
+CREATE (s1)-[r23:DRIVE {km:1.4,minute:5,from:'s1',to:'h7',id:'r23'}]->(h7)
+CREATE (h7)-[r24:DRIVE {km:2.2,minute:3,from:'h7',to:'h8',id:'r24'}]->(h8)
+CREATE (s6)-[r25:DRIVE {km:1.9,minute:4,from:'s6',to:'h7',id:'r25'}]->(h7)
+CREATE (s6)-[r26:DRIVE {km:0.9,minute:2,from:'s6',to:'h8',id:'r26'}]->(h8)
+CREATE (h12)-[r27:DRIVE {km:0.5,minute:6,from:'h12',to:'h10',id:'r27'}]->(h10)
