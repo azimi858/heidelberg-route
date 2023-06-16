@@ -115,6 +115,10 @@ function App() {
   return (
     <div className="app">
       <h1>Heidelberg Route finder</h1>
+      <label>
+        <input type="checkbox" />
+        map/Satellite
+      </label>
       <div className="main">
         <div className="map">
           <div className="map-content">
